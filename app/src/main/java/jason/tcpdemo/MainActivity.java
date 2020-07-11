@@ -1,6 +1,7 @@
 package jason.tcpdemo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -72,6 +73,7 @@ public class MainActivity extends Activity implements PermissionsUtil.IPermissio
         getPermission();
         bindID();
         bindListener();
+        FuncTcpClient.setMainActivity(this);
     }
 
     private void bindID() {
@@ -108,4 +110,6 @@ public class MainActivity extends Activity implements PermissionsUtil.IPermissio
     public void onPermissionsDenied(int requestCode, String... permission) {
 
     }
+
+
 }

@@ -23,8 +23,10 @@ import java.util.concurrent.Executors;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
+import jason.tcpdemo.MainActivity;
 import jason.tcpdemo.R;
 import jason.tcpdemo.coms.AudioHelper;
+import jason.tcpdemo.coms.BeepHelper;
 import jason.tcpdemo.coms.TcpClient;
 
 import static android.content.ContentValues.TAG;
@@ -97,6 +99,14 @@ public class FuncTcpClient extends Activity {
         }
     };
     private Thread audioListenThread = new Thread(runnable);
+
+    private Button btnBeep;
+    private static MainActivity mainActivity;
+    private BeepHelper beepHelper = new BeepHelper(mainActivity);
+
+    public static void setMainActivity(MainActivity s){
+        mainActivity = s;
+    }
 
     private void stopThread(){
         synchronized (lock){
@@ -200,6 +210,13 @@ public class FuncTcpClient extends Activity {
                     }
                     isAudioRun = !isAudioRun;
                     break;
+                case R.id.btn_tcpClientBeep:
+                    Message msg = myHandler.obtainMessage();
+                    msg.what = 5;
+                    msg.obj = tsh.getMydate_local();
+                    beepHelper.beep();
+                    myHandler.sendMessage(msg);
+                    break;
             }
         }
     }
@@ -294,6 +311,11 @@ public class FuncTcpClient extends Activity {
                     case 4:
                         txtSend.append("发送时间戳:"+msg.obj.toString()+"\n");
                         break;
+                    case 5:
+                        long time = (long)msg.obj;
+                        txtSend.append("beep时间戳："+String.valueOf(time)+"\n");
+                        break;
+
                 }
             }
         }
@@ -383,6 +405,7 @@ public class FuncTcpClient extends Activity {
         txtTime = (TextView) findViewById(R.id.txt_clienttimestamp);
         btnControlAudio = (Button)findViewById(R.id.btn_tcpClientControlAudio);
         txtVolume = (TextView) findViewById(R.id.txt_tcpClientVolumeShow);
+        btnBeep = (Button)findViewById(R.id.btn_tcpClientBeep);
     }
     private void bindListener(){
         btnStartClient.setOnClickListener(myBtnClicker);
@@ -395,6 +418,7 @@ public class FuncTcpClient extends Activity {
         btnSendTime.setOnClickListener(myBtnClicker);
         btnTimeCorrect.setOnClickListener(myBtnClicker);
         btnControlAudio.setOnClickListener(myBtnClicker);
+        btnBeep.setOnClickListener(myBtnClicker);
     }
     private void bindReceiver(){
         IntentFilter intentFilter = new IntentFilter("tcpClientReceiver");

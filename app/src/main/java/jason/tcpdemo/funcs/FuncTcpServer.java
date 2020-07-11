@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.InterruptedIOException;
 import java.lang.ref.WeakReference;
@@ -27,8 +28,10 @@ import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import jason.tcpdemo.MainActivity;
 import jason.tcpdemo.R;
 import jason.tcpdemo.coms.AudioHelper;
+import jason.tcpdemo.coms.BeepHelper;
 import jason.tcpdemo.coms.TcpServer;
 
 import static android.content.ContentValues.TAG;
@@ -50,6 +53,7 @@ public class FuncTcpServer extends Activity {
     private MyBroadcastReceiver myBroadcastReceiver = new MyBroadcastReceiver();
     private TimeStampHelper tsh = new TimeStampHelper();
     private boolean isAudioRun = false;
+
     //private AudioHandler audioHandler = new AudioHandler(this);
     /*private boolean isAudioRun = false;
     private Runnable runnable = new Runnable() {
@@ -204,6 +208,7 @@ public class FuncTcpServer extends Activity {
                         }
                         //txtRcv.append("[port2]"+msg.obj.toString());
                         break;
+
 
                 }
             }
@@ -408,7 +413,6 @@ public class FuncTcpServer extends Activity {
                         }
                     });
                     break;
-
             }
         }
     }
@@ -450,6 +454,7 @@ public class FuncTcpServer extends Activity {
         btnCalTime.setOnClickListener(myBtnClicker);
         btnListenTime.setOnClickListener(myBtnClicker);
         btnAskTime.setOnClickListener(myBtnClicker);
+
     }
 
     private void bindID() {
@@ -473,6 +478,7 @@ public class FuncTcpServer extends Activity {
         editServerSend = (EditText) findViewById(R.id.edit_tcpClientSend);
         editServerPort1 = (EditText)findViewById(R.id.edit_Server_Port1);
         editServerPort2 = (EditText)findViewById(R.id.edit_Server_Port2);
+
     }
 
     /**
